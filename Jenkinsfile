@@ -20,7 +20,6 @@ pipeline {
             steps {
                 script {
                     dockerImage = docker.build registry 
-                    dockerImage.tag("$BUILD_NUMBER")
                 }
             }
         }
@@ -29,7 +28,7 @@ pipeline {
             steps {
                 script {
                     sh "aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin 010526274628.dkr.ecr.ap-southeast-2.amazonaws.com"
-                    sh "docker push 010526274628.dkr.ecr.ap-southeast-2.amazonaws.com/spring-service:$BUILD_NUMBER"
+                    sh "docker push 010526274628.dkr.ecr.ap-southeast-2.amazonaws.com/spring-service"
                     
                 }
             }
@@ -37,7 +36,7 @@ pipeline {
                 
         stage ("Helm install") {
             steps {
-                    sh "helm upgrade first --install feb24-chart --namespace helm-deployment --set image.tag=$BUILD_NUMBER"
+                    sh "helm upgrade first --install feb24-chart --namespace helm-deployment"
                 }
             }
     }
