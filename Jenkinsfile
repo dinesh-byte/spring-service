@@ -40,7 +40,13 @@ pipeline {
         stage ("Helm install") {
             steps {
                     def imageTag = "${env.BUILD_NUMBER}"
-                    sh "helm upgrade spring --install mychart --namespace helm-deployment"
+                    sh """
+                    helm upgrade --install my-release mychart \
+                    --set image.repository=${IMAGE_NAME} \
+                    --set image.tag=${imageTag} \
+                    --namespace helm-deployment \
+                    --recreate-pods
+                    """
                 }
             }
     }
