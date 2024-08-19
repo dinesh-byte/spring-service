@@ -41,7 +41,7 @@ pipeline {
             steps {
                 script {
                     try {
-                        sh 'docker rm -f tomcattest'
+                        sh "docker rm -f ${IMAGE_NAME}"
                     } catch (error) {
                         // Log the error or do nothing if the container doesn't exist
                         echo "No previous container to remove or another error occurred: ${error}"
