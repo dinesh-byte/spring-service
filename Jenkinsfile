@@ -35,7 +35,7 @@ pipeline {
                 
         stage ("Helm install") {
             steps {
-                    sh "helm upgrade first --install feb24-chart --namespace helm-deployment"
+                    sh "helm upgrade first --install mychart --namespace helm-deployment"
                 }
             }
     }
