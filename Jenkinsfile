@@ -39,6 +39,7 @@ pipeline {
                 
         stage ("Helm install") {
             steps {
+                script {
                     def imageTag = "${env.BUILD_NUMBER}"
                     sh """
                     helm upgrade --install my-release mychart \
@@ -49,6 +50,6 @@ pipeline {
                     """
                 }
             }
+        }
     }
-   
 }
