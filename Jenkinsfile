@@ -36,7 +36,19 @@ pipeline {
                 }
             }
         }
-                
+
+        stage('Remove Previous Container') {
+            steps {
+                script {
+                    try {
+                        sh 'docker rm -f tomcattest'
+                    } catch (error) {
+                        // Log the error or do nothing if the container doesn't exist
+                        echo "No previous container to remove or another error occurred: ${error}"
+                    }
+                }
+            }
+        }  
         stage ("Helm install") {
             steps {
                 script {
