@@ -5,7 +5,7 @@ pipeline {
         maven 'Maven3'
     }
     environment {
-        registry = "docker push 010526269830.dkr.ecr.ap-south-1.amazonaws.com/myspringrepo"
+        registry = "010526269830.dkr.ecr.ap-south-1.amazonaws.com/myspringrepo"
     }
     stages {
         
