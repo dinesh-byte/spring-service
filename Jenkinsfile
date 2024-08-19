@@ -4,9 +4,8 @@ pipeline {
    tools {
         maven 'Maven3'
     }
-    
     environment {
-        registry = "010526274628.dkr.ecr.ap-southeast-2.amazonaws.com/spring-service"
+        registry = "docker push 010526269830.dkr.ecr.ap-south-1.amazonaws.com/myspringrepo"
     }
     stages {
         
@@ -27,8 +26,8 @@ pipeline {
         stage ("Push to ECR") {
             steps {
                 script {
-                    sh "aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin 010526274628.dkr.ecr.ap-southeast-2.amazonaws.com"
-                    sh "docker push 010526274628.dkr.ecr.ap-southeast-2.amazonaws.com/spring-service"
+                    sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 010526269830.dkr.ecr.ap-south-1.amazonaws.com"
+                    sh "docker push 010526269830.dkr.ecr.ap-south-1.amazonaws.com/myspringrepo:latest"
                     
                 }
             }
