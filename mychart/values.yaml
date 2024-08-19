@@ -8,7 +8,7 @@ image:
   repository: 010526269830.dkr.ecr.ap-south-1.amazonaws.com/myspringrepo
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: {{ .Values.image.tag }}
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
