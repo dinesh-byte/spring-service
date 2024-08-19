@@ -5,7 +5,9 @@ pipeline {
         maven 'Maven3'
     }
     environment {
-        registry = "010526269830.dkr.ecr.ap-south-1.amazonaws.com/myspringrepo"
+        ECR_REPO = "010526269830.dkr.ecr.ap-south-1.amazonaws.com/myspringrepo"
+        AWS_REGION = 'ap-south-1'
+        IMAGE_NAME = "${ECR_REPO}/springserv"
     }
     stages {
         
@@ -18,7 +20,8 @@ pipeline {
         stage ("Build Image") {
             steps {
                 script {
-                    dockerImage = docker.build registry 
+                    def imageTag = "${env.BUILD_NUMBER}"
+                    docker.build("${IMAGE_NAME}:${imageTag}")
                 }
             }
         }
@@ -27,7 +30,8 @@ pipeline {
             steps {
                 script {
                     sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 010526269830.dkr.ecr.ap-south-1.amazonaws.com"
-                    sh "docker push 010526269830.dkr.ecr.ap-south-1.amazonaws.com/myspringrepo:latest"
+                    def imageTag = "${env.BUILD_NUMBER}"
+                    sh "docker push ${IMAGE_NAME}:${imageTag}"
                     
                 }
             }
@@ -35,8 +39,17 @@ pipeline {
                 
         stage ("Helm install") {
             steps {
+                    def imageTag = "${env.BUILD_NUMBER}"
                     sh "helm upgrade spring --install mychart --namespace helm-deployment"
                 }
             }
+    }
+    post {
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Deployment failed!'
+        }
     }
 }
