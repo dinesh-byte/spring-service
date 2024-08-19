@@ -5,7 +5,7 @@ pipeline {
         maven 'Maven3'
     }
     environment {
-        ECR_REPO = "010526269830.dkr.ecr.ap-south-1.amazonaws.com/myspringrepo"
+        ECR_REPO = '010526269830.dkr.ecr.ap-south-1.amazonaws.com/myspringrepo'
         AWS_REGION = 'ap-south-1'
         IMAGE_NAME = "${ECR_REPO}/springserv"
     }
